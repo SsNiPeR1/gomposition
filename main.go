@@ -109,11 +109,11 @@ func handleConnection(conn net.Conn) {
 	switch packet.NextState {
 	case 1: // status
 		buffer := make([]byte, 1024) // status request
-		n, _ = conn.Read(buffer)
+		conn.Read(buffer)
 		jsonResponse, _ := json.Marshal(StatusResponse{
 			Version: StatusVersion{
-				Name:     "Gomposition 1.16.5",
-				Protocol: 754,
+				Name:     "Gomposition 1.20.1",
+				Protocol: 763,
 			},
 			EnforcesSecureChat: true,
 			Description: StatusDescription{
@@ -142,7 +142,7 @@ func handleConnection(conn net.Conn) {
 			return
 		}
 	}
-	
+
 	buf1 := make([]byte, 1024)
 	n, _ = conn.Read(buf1)
 
@@ -159,7 +159,7 @@ func handleConnection(conn net.Conn) {
 			fmt.Println("Error writing response:", err)
 			return
 		}
-	}	
+	}
 }
 
 func readVarInt(data []byte) (int16, int) {
